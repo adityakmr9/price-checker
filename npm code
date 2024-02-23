@@ -1,0 +1,22 @@
+// index.js
+
+const fetch = require('node-fetch');
+
+async function getCryptoPrice(cryptoSymbol) {
+    try {
+        const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoSymbol}&vs_currencies=usd`);
+        const data = await response.json();
+        return data[cryptoSymbol].usd;
+    } catch (error) {
+        console.error('Error fetching cryptocurrency price:', error);
+    }
+}
+
+async function displayCryptoPrice(cryptoSymbol) {
+    const price = await getCryptoPrice(cryptoSymbol);
+    console.log(`Current price of ${cryptoSymbol.toUpperCase()}: $${price}`);
+}
+
+// Example usage:
+const cryptoSymbol = 'bitcoin'; // Change this to the cryptocurrency symbol you want to check
+displayCryptoPrice(cryptoSymbol);
